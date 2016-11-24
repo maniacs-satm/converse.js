@@ -1236,18 +1236,18 @@
                 },
 
                 onChatRoomMessage: function (message) {
-                    var $message = $(message),
-                        $forwarded = $message.find('forwarded'),
-                        $delay;
-                    if ($forwarded.length) {
-                        $message = $forwarded.children('message');
-                        $delay = $forwarded.children('delay');
+                    var original_stanza = message,
+                        forwarded = message.querySelector('forwarded'),
+                        delay;
+                    if (!_.isNull(forwarded)) {
+                        message = forwarded.querySelector('message');
+                        delay = forwarded.querySelector('delay');
                     }
-                    var jid = $message.attr('from'),
-                        msgid = $message.attr('id'),
+                    var jid = message.getAttribute('from'),
+                        msgid = message.getAttribute('id'),
                         resource = Strophe.getResourceFromJid(jid),
                         sender = resource && Strophe.unescapeNode(resource) || '',
-                        subject = $message.children('subject').text(),
+                        subject = _.propertyOf(message.querySelector('subject'))('textContent'),
                         dupes = msgid && this.model.messages.filter(function (msg) {
                             // Find duplicates.
                             // Some bots (like HAL in the prosody chatroom)
@@ -1264,7 +1264,7 @@
                     if (sender === '') {
                         return true;
                     }
-                    this.model.createMessage($message, $delay, message);
+                    this.model.createMessage(message, delay, original_stanza);
                     if (sender !== this.model.get('nick')) {
                         // We only emit an event if it's not our own message
                         converse.emit('message', message);
