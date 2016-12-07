@@ -113,8 +113,8 @@
                     return this.__super__.initialize.apply(this, arguments);
                 },
 
-                afterShown: function () {
-                    this.__super__.afterShown.apply(this, arguments);
+                _show: function () {
+                    this.__super__._show.apply(this, arguments);
                     if (!this.model.get('minimized')) {
                         converse.chatboxviews.trimChats(this);
                     }
@@ -181,6 +181,18 @@
                         this.hide();
                     }
                     return result;
+                },
+
+                generateHeadingHTML: function () {
+                    var html = this.__super__.generateHeadingHTML.apply(this, arguments);
+                    var div = document.createElement('div');
+                    div.innerHTML = html;
+                    var el = converse.templates.chatbox_minimize(
+                        {info_minimize: __('Minimize this chat box')}
+                    );
+                    var button = div.querySelector('.close-chatbox-button');
+                    button.insertAdjacentHTML('afterend', el);
+                    return div.innerHTML;
                 }
             },
 
@@ -196,7 +208,8 @@
                     /* Find the chat box and show it. If it doesn't exist, create it.
                      */
                     var chatbox = this.__super__.showChat.apply(this, arguments);
-                    if (chatbox.get('minimized')) {
+                    var maximize = _.isUndefined(attrs.maximize) ? true : attrs.maximize;
+                    if (chatbox.get('minimized') && maximize) {
                         chatbox.maximize();
                     }
                     return chatbox;
@@ -496,7 +509,7 @@
                 // Inserts a "minimize" button in the chatview's header
                 var $el = view.$el.find('.toggle-chatbox-button');
                 var $new_el = converse.templates.chatbox_minimize(
-                    _.extend({info_minimize: __('Minimize this chat box')})
+                    {info_minimize: __('Minimize this chat box')}
                 );
                 if ($el.length) {
                     $el.replaceWith($new_el);
@@ -505,7 +518,6 @@
                 }
             };
             converse.on('chatBoxOpened', renderMinimizeButton);
-            converse.on('chatRoomOpened', renderMinimizeButton);
 
             converse.on('controlBoxOpened', function (evt, chatbox) {
                 // Wrapped in anon method because at scan time, chatboxviews

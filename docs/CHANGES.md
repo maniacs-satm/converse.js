@@ -1,10 +1,31 @@
 # Changelog
 
-## 2.0.2 (Unreleased)
+## 2.0.4 (Unreleased)
+- #737: Bugfix. Translations weren't being applied. [jcbrand]
+- Fetch room info and store it on the room model.
+  For context, see: http://xmpp.org/extensions/xep-0045.html#disco-roominfo [jcbrand]
+- Bugfix. Switching from bookmarks form to config form shows only the spinner. [jcbrand]
+- Bugfix. Other room occupants sometimes not shown when reloading the page. [jcbrand]
+- Bugfix. Due to changes in `converse-core` the controlbox wasn't aware anymore of
+  disconnection or reconnection events. [jcbrand]
+- Optimize fetching of MAM messages (in some cases happened on each page load). [jcbrand]
+- Fix empty controlbox toggle after disconnect. [jcbrand]
+- When inviting someone to a members-only room, first add them to the member
+  list. [jcbrand]
+- New configuration setting
+  [muc_disable_moderator_commands](https://conversejs.org/docs/html/configuration.html#muc_disable_moderator_commands)
+  [jcbrand]
+
+## 2.0.3 (2016-11-30)
+- #735 Room configuration button not visible. [jcbrand]
+- CSS fix for fadeIn animation. [jcbrand]
+
+## 2.0.2 (2016-11-30)
 - #721 keepalive not working with anonymous authentication [jcbrand]
+- #723 Bugfix: Arrays in configuration settings were ignored. [jcbrand]
+- #734 Bugfix. `converse.rooms.open` ignored the `muc_nickname_from_jid` setting. [jcbrand]
 - Enable new rooms to be configured automatically, with a default config, via `rooms.open`.
   For details, refer to the [relevant documentation](https://conversejs.org/docs/html/developer_api.html#the-rooms-grouping) [jcbrand]
-- #723 Bugfix: Arrays in configuration settings were ignored. [jcbrand]
 - Bugfix: Chatboxes aren't closed when logging out. [jcbrand]
 - Bugfix: Trying to save data on the `ControlBox` model before `ChatBoxes`
   collection has its `browserStorage` configured.
@@ -16,6 +37,8 @@
   Instead, `converse.initialize` returns a promise which will resolve once
   initialization is complete. [jcbrand]
 - New event ['reconnecting'](https://conversejs.org/docs/html/development.html#reconnecting) [jcbrand]
+- New configuration setting [allow_bookmarks](https://conversejs.org/docs/html/configuration.html#allow_bookmarks) [jcbrand]
+- The `rooms.open` API method will no longer maximize rooms that are minimized (unless `maximize: true` is passed in). [jcbrand]
 
 ## 2.0.1 (2016-11-07)
 - #203 New configuration setting [muc_domain](https://conversejs.org/docs/html/configuration.html#muc_domain) [jcbrand]

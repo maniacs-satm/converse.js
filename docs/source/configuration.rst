@@ -114,6 +114,14 @@ Here's an example of converse.js being initialized with these three options:
         allow_logout: false
     });
 
+allow_bookmarks
+---------------
+
+* Default:  ``true``
+
+Enables/disables chatroom bookmarks functionality.
+This setting is only applicable if the ``converse-bookmarks`` plugin is loaded.
+
 allow_chat_pending_contacts
 ---------------------------
 
@@ -700,6 +708,13 @@ same computer.
 See also the `storage`_ option, which applies to other cached data, such as
 which chats you have open, what features the XMPP server supports and what
 your online status is.
+
+muc_disable_moderator_commands
+------------------------------
+
+* Default: ``false``
+
+Allows you to disable the moderator commands such as ``/kick`` or ``/ban``.
 
 muc_domain
 ----------
