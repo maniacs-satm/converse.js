@@ -11,7 +11,6 @@
  */
 (function (root, factory) {
     define("converse-muc", [
-            "converse-core",
             "converse-api",
             "tpl!chatarea",
             "tpl!chatroom",
@@ -48,20 +47,6 @@
             tpl_room_panel
     ) {
     "use strict";
-    _converse.templates.chatarea = tpl_chatarea;
-    _converse.templates.chatroom = tpl_chatroom;
-    _converse.templates.chatroom_form = tpl_chatroom_form;
-    _converse.templates.chatroom_nickname_form = tpl_chatroom_nickname_form;
-    _converse.templates.chatroom_password_form = tpl_chatroom_password_form;
-    _converse.templates.chatroom_sidebar = tpl_chatroom_sidebar;
-    _converse.templates.chatroom_head = tpl_chatroom_head;
-    _converse.templates.chatrooms_tab = tpl_chatrooms_tab;
-    _converse.templates.info = tpl_info;
-    _converse.templates.occupant = tpl_occupant;
-    _converse.templates.room_description = tpl_room_description;
-    _converse.templates.room_item = tpl_room_item;
-    _converse.templates.room_panel = tpl_room_panel;
-
     var ROOMS_PANEL_ID = 'chatrooms';
 
     // Strophe methods for building stanzas
@@ -76,10 +61,6 @@
     var $ = converse.env.jQuery,
         _ = converse.env._,
         moment = converse.env.moment;
-
-    // For translations
-    var __ = utils.__.bind(_converse);
-    var ___ = utils.___;
 
     // Add Strophe Namespaces
     Strophe.addNamespace('MUC_ADMIN', Strophe.NS.MUC + "#admin");
@@ -206,6 +187,10 @@
             /* The initialize function gets called as soon as the plugin is
              * loaded by converse.js's plugin machinery.
              */
+            var _converse = this._converse,
+                __ = _converse.__,
+                ___ = _converse.___;
+
             // XXX: Inside plugins, all calls to the translation machinery
             // (e.g. utils.__) should only be done in the initialize function.
             // If called before, we won't know what language the user wants,
